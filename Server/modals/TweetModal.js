@@ -1,40 +1,21 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
-const TweetSchema = new mongoose.Schema({
-    userId: {
-        type: String,
-        required: true
+const tweetSchema = new mongoose.Schema({
+    description:{
+        type:String,
+        required:true
     },
-    text: {
-        type: String,
-        maxlength: 280
+    like:{
+        type:Array,
+        default:[]
     },
-    image: {
-        type: Array
+    userId:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"User"
     },
-    likes: {
-        type: Array,
-        default: []
+    userDetails:{
+        type:Array,
+        default:[]
     },
-    replies: {
-        type: Array,
-        default: []
-    },
-    retweets: {
-        type: Array,
-        default: []
-    },
-    reply: {
-        type: Boolean,
-        required: true
-    },
-    replyTo: {
-        type: String
-    }
-}, {
-    timestamps: true
-});
-
-const Tweet = mongoose.model('Tweet', TweetSchema);
-
-module.exports = Tweet;
+},{timestamps:true});
+module.exports = mongoose.model("Tweet", tweetSchema);

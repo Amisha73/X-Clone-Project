@@ -1,38 +1,34 @@
 const express = require('express');
-// const cors = require('cors');
-const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+const databaseConnection = require('./config/database');
+const cookieParser = require('cookie-parser');
+const userRoute = require('./routes/userRoute');
+const tweetRoute = require('./routes/tweetRoute');
+const cors = require('cors');
 
-const authRoute = require('./routes/Auth');
-const usersRoute = require('./routes/User');
-const tweetsRoute = require('./routes/Tweets');
-
-require('dotenv').config();
-
+dotenv.config();
+databaseConnection();
 const app = express();
-const port = process.env.PORT ;
 
-const uri = async function connectDB(){
-  try{
-      await mongoose.connect(process.env.DATABASE_URL)
-  }catch(err){
-      console.log(err)
-  }
-};
-uri();
-// mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true });
-// const connection = mongoose.connection;
-// connection.once('open', () => {
-//   console.log('MongoDB database connection established successfully');
-// });
 
-// Middleware
-// app.use(cors());
+// middlewares
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 app.use(express.json());
+app.use(cookieParser());
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true,
+};
+app.use(cors(corsOptions));
 
-app.use('/api/auth', authRoute);
-app.use('/api/users', usersRoute);
-app.use('/api/tweets', tweetsRoute);
+// api
+app.use("/api/v1/user", userRoute);
+app.use("/api/v1/tweet", tweetRoute);
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+app.listen(process.env.PORT, () => {
+  console.log(`Server listen at port ${process.env.PORT}`);
 });
