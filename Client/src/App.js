@@ -1,21 +1,14 @@
-import "./App.css";
-import { Route,Routes } from "react-router-dom";
-import Login from "./pages/auth/Login";
-import Signup from "./pages/auth/Signup";
-import HomePage from "./pages/home/HomePage";
-
+import './App.css';
+import Body from './pages/Body';
+import {Toaster} from "react-hot-toast"
 
 function App() {
   return (
-    <div className=''>
-    <Routes>
-      <Route path='/' element={<HomePage />} />
-      <Route path='/login' element={<Login /> } />
-      <Route path='/signup' element={<Signup/>} />
-    </Routes>
-  </div>
+    <div className="App">
+      <Body/>
+      <Toaster/>
+    </div>
   );
 }
-
 
 export default App;

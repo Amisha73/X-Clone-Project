@@ -1,21 +1,40 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
-import { FaApple } from "react-icons/fa";
-import LogoSvg from "../../components/svg/logo";
+import LogoSvg from "./logo";
+// import toast from "react-hot-toast";
+// import { useNavigate } from "react-router-dom";
+// import { useDispatch } from "react-redux";
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  // const navigate = useNavigate();
+  // const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-  };
-
-  const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    // login
+    // try {
+    //   const res = await axios.post(
+    //     `${USER_API_END_POINT}/login`,
+    //     { email, password },
+    //     {
+    //       headers: {
+    //         "Content-Type": "application/json",
+    //       },
+    //       withCredentials: true,
+    //     }
+    //   );
+    //   dispatch(getUser(res?.data?.user));
+    //   if (res.data.success) {
+    //     navigate("/");
+    //     toast.success(res.data.message);
+    //   }
+    // } catch (error) {
+    //   toast.success(error.response.data.message);
+    //   console.log(error);
+    // }
   };
 
   return (
@@ -37,12 +56,6 @@ const Login = () => {
             Sign in with Google
           </button>
 
-          {/* Apple Sign-in Button */}
-          <button className="flex items-center justify-center w-full py-3 bg-black border border-gray-500 text-gray-300 rounded-full text-lg hover:bg-gray-700 transition">
-            <FaApple className="mr-2" />
-            Sign in with Apple
-          </button>
-
           {/* Divider with "or" text */}
           <div className="flex items-center justify-between w-full text-gray-500 my-4">
             <hr className="flex-grow border-gray-600" />
@@ -51,30 +64,25 @@ const Login = () => {
           </div>
 
           <div className="flex-1 flex flex-col justify-center items-center">
-            <form className="flex gap-4 flex-col" onSubmit={handleSubmit}>
+            <form className="flex gap-4 flex-col" onSubmit={submitHandler}>
+              <input
+                type="email"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-80 p-3 "
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Email"
+              />
 
-                <input
-                  type="text"
-                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-80 p-3 "
-                  placeholder="UserName"
-                  name="username"
-                  onChange={handleInputChange}
-                  value={formData.username}
-                />
-
-
-                <input
-                  type="password"
-                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-80 p-3 "
-                  placeholder="Password"
-                  name="password"
-                  onChange={handleInputChange}
-                  value={formData.password}
-                />
+              <input
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full focus:ring-blue-500 focus:border-blue-500 block w-80 p-3 "
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Password"
+              />
               <button className="w-full py-2 bg-blue-500 text-white rounded-full">
-				Login
-            </button>
-
+                Login
+              </button>
             </form>
 
             <p className="text-center text-gray-400 mt-6">
@@ -93,5 +101,3 @@ const Login = () => {
   );
 };
 export default Login;
-
-
