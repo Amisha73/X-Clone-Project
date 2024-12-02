@@ -7,6 +7,7 @@
 
 # server node modules
 # /Server/node_modules
+# /Server/.env
 
 # testing
 /coverage

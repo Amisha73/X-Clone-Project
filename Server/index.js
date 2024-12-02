@@ -1,34 +1,46 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const databaseConnection = require('./config/database');
 const cookieParser = require('cookie-parser');
 const userRoute = require('./routes/userRoute');
 const tweetRoute = require('./routes/tweetRoute');
-const cors = require('cors');
+const mongoose = require("mongoose");
+const cors = require('cors'); 
 
-dotenv.config();
-databaseConnection();
+dotenv.config({
+  path:".env"
+})
+
 const app = express();
 
+// Connect to MongoDB
+const connect = () => {
+  mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+      console.log("Connected to MongoDB database");
+    })
+    .catch((err) => {
+      console.error("Error connecting to MongoDB", err);
+      process.exit(1);
+    });
+};
 
-// middlewares
-app.use(
-  express.urlencoded({
-    extended: true,
-  })
-);
+// Middleware
 app.use(express.json());
 app.use(cookieParser());
+
+// Enable CORS if needed
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: "process.env.FRONTEND_URL", // Update this to your frontend URL
   credentials: true,
 };
 app.use(cors(corsOptions));
 
-// api
+// API routes
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/tweet", tweetRoute);
 
+// Start server
 app.listen(process.env.PORT, () => {
-  console.log(`Server listen at port ${process.env.PORT}`);
+  connect();
+  console.log(`Server listening at port ${process.env.PORT}`);
 });

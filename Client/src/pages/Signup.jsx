@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import LogoSvg from "./logo";
-// import toast from "react-hot-toast";
-// import { useNavigate } from "react-router-dom";
-// import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { USER_API_END_POINT } from "../utils/constant";
 import { Link } from "react-router-dom";
 
 const Signup = () => {
@@ -10,27 +11,26 @@ const Signup = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const navigate = useNavigate();
-  // const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const submitHandler = async (e) => {
     e.preventDefault();
     // signup
-    //  try {
-    //   const res = await axios.post(`${USER_API_END_POINT}/register`, { name, username, email, password }, {
-    //     headers: {
-    //       'Content-Type': "application/json"
-    //     },
-    //     withCredentials: true
-    //   });
-    //   if(res.data.success){
-    //     setIsLogin(true);
-    //     toast.success(res.data.message);
-    //   }
-    // } catch (error) {
-    //   toast.success(error.response.data.message);
-    //   console.log(error);
-    // }
+     try {
+      const res = await axios.post(`${USER_API_END_POINT}/register`, { name, username, email, password }, {
+        headers: {
+          'Content-Type': "application/json"
+        },
+        withCredentials: true
+      });
+      if(res.data.success){
+        navigate("/signup");
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      toast.success(error.response.data.message);
+      console.log(error);
+    }
   };
 
   return (

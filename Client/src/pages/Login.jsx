@@ -2,39 +2,42 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import LogoSvg from "./logo";
-// import toast from "react-hot-toast";
-// import { useNavigate } from "react-router-dom";
-// import { useDispatch } from "react-redux";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import axios from "axios";
+import { USER_API_END_POINT } from "../utils/constant";
+import getUser from "../redux/userSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // const navigate = useNavigate();
-  // const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const submitHandler = async (e) => {
     e.preventDefault();
     // login
-    // try {
-    //   const res = await axios.post(
-    //     `${USER_API_END_POINT}/login`,
-    //     { email, password },
-    //     {
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //       },
-    //       withCredentials: true,
-    //     }
-    //   );
-    //   dispatch(getUser(res?.data?.user));
-    //   if (res.data.success) {
-    //     navigate("/");
-    //     toast.success(res.data.message);
-    //   }
-    // } catch (error) {
-    //   toast.success(error.response.data.message);
-    //   console.log(error);
-    // }
+    try {
+      const res = await axios.post(
+        `${USER_API_END_POINT}/login`,
+        { email, password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      );
+      dispatch(getUser(res?.data?.user));
+      if (res.data.success) {
+        navigate("/");
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      toast.success(error.response.data.message);
+      console.log(error);
+    }
   };
 
   return (
