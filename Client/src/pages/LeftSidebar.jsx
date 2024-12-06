@@ -1,4 +1,5 @@
 import React from 'react';
+import LogoSvg from './logo';
 import { CiHome } from "react-icons/ci";
 import { CiHashtag } from "react-icons/ci";
 import { IoIosNotificationsOutline } from "react-icons/io";
@@ -35,7 +36,7 @@ const LeftSidebar = () => {
         <div className='w-[20%]'>
             <div>
                 <div>
-                    <img className='ml-5' width={"24px"} src="https://www.edigitalagency.com.au/wp-content/uploads/new-Twitter-logo-x-black-png-1200x1227.png" alt="twitter-logo" />
+                    <LogoSvg className="ml-5 fill-white" width={"24px"} />
                 </div>
                 <div className='my-4'>
                     <Link to="/" className='flex items-center my-2 px-4 py-2 hover:bg-gray-200 hover:cursor-pointer rounded-full'>
